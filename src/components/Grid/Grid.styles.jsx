@@ -6,6 +6,6 @@ export const Wrapper = styled.div`
 	display: inline-block;
 	background: #ebeff0;
 	box-shadow: 11px 11px 25px #c8cbcc, -11px -11px 23px #ffffff;
-	margin: 10px 0 20px 0;
+	margin: auto;
 	overflow: hidden;
 `;
