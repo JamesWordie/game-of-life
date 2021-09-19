@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import Button from "../../components/Button";
 
 // Components
 import Grid from "../../components/Grid";
+import Button from "../../components/Button";
+import ButtonGrid from "../../components/ButtonGrid";
 
 // Hooks
 import { useInitialGrid } from "../../hooks/useInitialGrid";
@@ -15,10 +16,10 @@ const Game = () => {
 	const [running, setRunning] = useState(false);
 	const [generation, setGeneration] = useState(0);
 	const [equilibrium, setEquilibrium] = useState(false);
+	const [speed, setSpeed] = useState(100);
 
 	const ROWS = 10;
 	const COLS = 20;
-	const SPEED = 100;
 
 	const [getInitialGrid] = useInitialGrid();
 	// const runGame = useRunGame;
@@ -78,7 +79,7 @@ const Game = () => {
 				setGrid(next);
 				let life = generation + 1;
 				setGeneration(life);
-			}, SPEED);
+			}, speed);
 
 			return () => clearInterval(intervalId);
 		}
@@ -88,9 +89,26 @@ const Game = () => {
 		setRunning(!running);
 	};
 
+	const handleReset = () => {
+		setRunning(false);
+		setGeneration(0);
+		setEquilibrium(false);
+		setGrid(getInitialGrid(ROWS, COLS));
+	};
+
+	const handleSpeed = (e) => {
+		const button = e.target.innerHTML;
+		button.match(/(Slow)/) ? setSpeed(250) : setSpeed(50);
+	};
+
 	return (
 		<>
-			<Button text={`${running ? "Pause" : "Start"}`} onClick={handleClick} />
+			<ButtonGrid>
+				<Button text={`${running ? "Pause" : "Start"}`} onClick={handleClick} />
+				<Button text="Reset" onClick={handleReset} />
+				<Button text="Evolution Speed - Slow" onClick={handleSpeed} />
+				<Button text="Evolution Speed - Fast" onClick={handleSpeed} />
+			</ButtonGrid>
 			<Grid grid={grid} />
 			{generation}
 			{equilibrium && <h3>Reached an Equilibrium State.</h3>}
