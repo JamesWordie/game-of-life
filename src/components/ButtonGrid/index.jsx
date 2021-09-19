@@ -3,10 +3,16 @@ import React from "react";
 // Styles
 import { Wrapper, Content } from "./ButtonGrid.styles";
 
+// Components
+import Dropdown from "../Dropdown";
+
 const ButtonGrid = ({ children }) => {
 	return (
 		<Wrapper>
-			<Content>{children}</Content>
+			<Content>
+				{children}
+				<Dropdown />
+			</Content>
 		</Wrapper>
 	);
 };
