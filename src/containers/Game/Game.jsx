@@ -17,7 +17,7 @@ const Game = () => {
 	const [equilibrium, setEquilibrium] = useState(false);
 
 	const ROWS = 10;
-	const COLS = 10;
+	const COLS = 20;
 	const SPEED = 100;
 
 	const [getInitialGrid] = useInitialGrid();
@@ -38,10 +38,10 @@ const Game = () => {
 					let sum = 0;
 					for (let i = -1; i < 2; i++) {
 						for (let j = -1; j < 2; j++) {
-							let col = (x + i + COLS) % COLS;
-							let row = (y + j + ROWS) % ROWS;
+							let row = (x + i + ROWS) % ROWS;
+							let col = (y + j + COLS) % COLS;
 
-							sum += grid[col][row].state;
+							sum += grid[row][col].state;
 						}
 					}
 					sum -= grid[x][y].state;
