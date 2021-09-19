@@ -43,7 +43,7 @@ const Dropdown = () => {
 
 	return (
 		<Wrapper>
-			<Header onClick={handleToggle}>{selectedOption || "Default"}</Header>
+			<Header onClick={handleToggle}>{selectedOption || "Grid Size"}</Header>
 			{isOpen && (
 				<Select>
 					<DropdownList>
