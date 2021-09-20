@@ -3,7 +3,9 @@ import React, { useState, useEffect } from "react";
 // Components
 import Grid from "../../components/Grid";
 import Button from "../../components/Button";
-import ButtonGrid from "../../components/ButtonGrid";
+import Span from "../../components/Span";
+import Dropdown from "../../components/Dropdown";
+import Alert from "../../components/Alert";
 
 // Hooks
 import { useInitialGrid } from "../../hooks/useInitialGrid";
@@ -17,19 +19,17 @@ const Game = () => {
 	const [generation, setGeneration] = useState(0);
 	const [equilibrium, setEquilibrium] = useState(false);
 	const [speed, setSpeed] = useState(100);
-
-	const ROWS = 10;
-	const COLS = 20;
+	const [ROWS, setRows] = useState(10);
+	const [COLS, setCols] = useState(20);
 
 	const [getInitialGrid] = useInitialGrid();
-	// const runGame = useRunGame;
 
 	// Render the initial grid onto the screen
 	useEffect(() => {
-		const initialGrid = getInitialGrid(ROWS, COLS);
-		setGrid(initialGrid);
-	}, []);
+		setGrid(getInitialGrid(ROWS, COLS));
+	}, [ROWS, COLS]);
 
+	// Play the game,
 	useEffect(() => {
 		if (running) {
 			let intervalId = setInterval(() => {
@@ -71,24 +71,26 @@ const Game = () => {
 						}
 					}
 				}
-				if (counter === ROWS * COLS) {
+				if (counter === ROWS * COLS || generation === 300) {
 					setRunning(false);
 					setEquilibrium(true);
 				}
 
 				setGrid(next);
-				let life = generation + 1;
-				setGeneration(life);
+				// let life = generation + 1;
+				setGeneration((prevState) => (prevState += 1));
 			}, speed);
 
 			return () => clearInterval(intervalId);
 		}
 	});
 
+	// Set running opposite to current
 	const handleClick = () => {
 		setRunning(!running);
 	};
 
+	// Reset the game
 	const handleReset = () => {
 		setRunning(false);
 		setGeneration(0);
@@ -96,22 +98,51 @@ const Game = () => {
 		setGrid(getInitialGrid(ROWS, COLS));
 	};
 
+	// Set the speed of evolution
 	const handleSpeed = (e) => {
 		const button = e.target.innerHTML;
 		button.match(/(Slow)/) ? setSpeed(250) : setSpeed(50);
 	};
 
+	// Set the grid size
+	const handleGrid = (option) => {
+		switch (option) {
+			case "20x10":
+				setRows(10);
+				setCols(20);
+				break;
+			case "30x15":
+				setRows(15);
+				setCols(30);
+				break;
+			case "40x20":
+				setRows(20);
+				setCols(40);
+				break;
+			default:
+				break;
+		}
+	};
+
 	return (
 		<>
-			<ButtonGrid>
+			<Span>
 				<Button text={`${running ? "Pause" : "Start"}`} onClick={handleClick} />
 				<Button text="Reset" onClick={handleReset} />
 				<Button text="Evolution Speed - Slow" onClick={handleSpeed} />
 				<Button text="Evolution Speed - Fast" onClick={handleSpeed} />
-			</ButtonGrid>
+			</Span>
+			<Span>
+				<h3>Generation: {generation}</h3>
+				<Dropdown handleGrid={handleGrid} />
+			</Span>
+			{generation >= 300 && (
+				<Alert text="Reached an Oscillating Infinite State" />
+			)}
+			{equilibrium && generation < 300 && (
+				<h3>Reached an Equilibrium State.</h3>
+			)}
 			<Grid grid={grid} />
-			{generation}
-			{equilibrium && <h3>Reached an Equilibrium State.</h3>}
 		</>
 	);
 };
