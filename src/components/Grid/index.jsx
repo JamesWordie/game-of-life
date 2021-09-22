@@ -7,7 +7,7 @@ import Cell from "../Cell";
 import { Wrapper } from "./Grid.styles";
 
 const Grid = (props) => {
-	const { grid } = props;
+	const { grid, handleCellClick } = props;
 	return (
 		<Wrapper>
 			{grid.map((row, rowIndex) => {
@@ -21,6 +21,7 @@ const Grid = (props) => {
 									row={row}
 									col={col}
 									state={state}
+									handleCellClick={handleCellClick}
 								/>
 							);
 						})}

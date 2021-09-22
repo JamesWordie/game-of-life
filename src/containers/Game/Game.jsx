@@ -85,6 +85,16 @@ const Game = () => {
 		}
 	});
 
+	// useEffect(() => {
+	// 	if (!running || !equilibrium) {
+	// 	}
+	// });
+
+	// handle the click on cell
+	const handleCellClick = (e) => {
+		console.log(e.target);
+	};
+
 	// Set running opposite to current
 	const handleClick = () => {
 		setRunning(!running);
@@ -142,7 +152,7 @@ const Game = () => {
 			{equilibrium && generation < 300 && (
 				<h3>Reached an Equilibrium State.</h3>
 			)}
-			<Grid grid={grid} />
+			<Grid grid={grid} handleCellClick={handleCellClick} />
 		</>
 	);
 };
