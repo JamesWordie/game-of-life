@@ -10,6 +10,7 @@ export const GlobalStyle = createGlobalStyle`
     --fontSmall: 1rem;
     --alive: #67db67;
     --dead: #faeaea;
+    --seaGreen: darkSeaGreen;
   }
   * {
     box-sizing: border-box;
