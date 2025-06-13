@@ -17,11 +17,11 @@ const Grid = (props) => {
 							const { row, col, state } = cell;
 							return (
 								<Cell
-									key={`cell-${row}-${col}`}
-									row={row}
-									col={col}
-									state={state}
-									handleCellClick={handleCellClick}
+									key={`${rowIndex}-${cell.col}`}
+									row={rowIndex}
+									col={cell.col}
+									state={cell.state}
+									onCellClick={handleCellClick} // Pass the handler
 								/>
 							);
 						})}

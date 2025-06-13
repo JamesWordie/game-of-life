@@ -78,21 +78,22 @@ const Game = () => {
 
 				setGrid(next);
 				// let life = generation + 1;
-				setGeneration((prevState) => (prevState += 1));
+				setGeneration(prevGeneration => prevGeneration + 1);
 			}, speed);
 
 			return () => clearInterval(intervalId);
 		}
-	});
-
-	// useEffect(() => {
-	// 	if (!running || !equilibrium) {
-	// 	}
-	// });
+	}, [running, grid, ROWS, COLS, speed, generation]);
 
 	// handle the click on cell
-	const handleCellClick = (e) => {
-		console.log(e.target);
+	const handleCellClick = (r, c) => {
+		if (!running) {
+			const newGrid = arrayClone(grid); // Assumes arrayClone is available
+			if (newGrid[r] && newGrid[r][c]) {
+				newGrid[r][c].state = newGrid[r][c].state ? 0 : 1;
+				setGrid(newGrid);
+			}
+		}
 	};
 
 	// Set running opposite to current
@@ -109,9 +110,8 @@ const Game = () => {
 	};
 
 	// Set the speed of evolution
-	const handleSpeed = (e) => {
-		const button = e.target.innerHTML;
-		button.match(/(Slow)/) ? setSpeed(250) : setSpeed(50);
+	const handleSpeed = (newSpeed) => {
+		setSpeed(newSpeed);
 	};
 
 	// Set the grid size
@@ -139,15 +139,15 @@ const Game = () => {
 			<Span>
 				<Button text={`${running ? "Pause" : "Start"}`} onClick={handleClick} />
 				<Button text="Reset" onClick={handleReset} />
-				<Button text="Evolution Speed - Slow" onClick={handleSpeed} />
-				<Button text="Evolution Speed - Fast" onClick={handleSpeed} />
+				<Button text="Evolution Speed - Slow" onClick={() => handleSpeed(250)} />
+				<Button text="Evolution Speed - Fast" onClick={() => handleSpeed(50)} />
 			</Span>
 			<Span>
 				<h3>Generation: {generation}</h3>
 				<Dropdown handleGrid={handleGrid} />
 			</Span>
 			{generation >= 300 && (
-				<Alert text="Reached an Oscillating Infinite State" />
+				<Alert text="Reached generation limit (300)" />
 			)}
 			{equilibrium && generation < 300 && (
 				<h3>Reached an Equilibrium State.</h3>
