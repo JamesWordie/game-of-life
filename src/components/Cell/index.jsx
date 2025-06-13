@@ -12,12 +12,12 @@ const Cell = ({ row, col, state, handleCellClick }) => {
 	};
 
 	return (
-		<Wrapper
-			id={`cell-${row}-${col}`}
-			state={state}
-			className={living}
-			onClick={() => handleClick}
-		></Wrapper>
+                <Wrapper
+                        id={`cell-${row}-${col}`}
+                        state={state}
+                        className={living}
+                        onClick={handleClick}
+                ></Wrapper>
 	);
 };
 

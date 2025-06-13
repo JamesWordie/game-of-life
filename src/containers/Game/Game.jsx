@@ -78,7 +78,7 @@ const Game = () => {
 
 				setGrid(next);
 				// let life = generation + 1;
-				setGeneration((prevState) => (prevState += 1));
+                                setGeneration((prevState) => prevState + 1);
 			}, speed);
 
 			return () => clearInterval(intervalId);

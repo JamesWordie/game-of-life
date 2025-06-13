@@ -4,11 +4,13 @@ import { shallow } from "enzyme";
 
 let component;
 beforeEach(() => {
-	component = shallow(<Grid grid={[[], []]} />);
+        component = shallow(
+                <Grid grid={[[], []]} handleCellClick={() => {}} />
+        );
 });
 
 describe("displaying the grid and contents", () => {
-	it("displays the grid with 200 cells", () => {
-		expect(component.find("div").length).toEqual(2);
-	});
+        it("displays the grid with 200 cells", () => {
+                expect(component.find("div").length).toEqual(3);
+        });
 });

@@ -30,11 +30,11 @@ const Dropdown = ({ handleGrid }) => {
 			{isOpen && (
 				<Select>
 					<DropdownList>
-						{options.map((option) => (
-							<StyledOption
-								onClick={() => handleClick(option)}
-								key={Math.random()}
-							>
+                                                {options.map((option) => (
+                                                        <StyledOption
+                                                                onClick={() => handleClick(option)}
+                                                                key={option}
+                                                        >
 								{option}
 							</StyledOption>
 						))}
